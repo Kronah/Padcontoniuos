@@ -26,7 +26,7 @@
   border-radius: 10px;
   padding: 10px;
   margin: 5px;
-  min-width: 120px;
+  min-width: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,6 +58,11 @@ input[type=range] {
   margin: 10px 0;
 }
 
+input[type=file] {
+  margin-top: 5px;
+  color: white;
+}
+
   </style>
 </head>
 <body>
@@ -65,45 +70,61 @@ input[type=range] {
   <div class="pad-container">
     <!-- 8 canais -->
     <script>
-      for (let i = 1; i <= 8; i++) {
-        document.write(`
-          <div class="pad" id="pad${i}">
-            <button class="toggle" onclick="togglePad(${i})" id="btn${i}">OFF</button>
-            <div class="mfx">MFX 1</div>
-            <div class="sound">88StageGrand</div>
-            <input type="range" min="0" max="100" value="100" id="vol${i}" onchange="setVolume(${i})" />
-            <div class="part">Parte ${i}</div>
-          </div>
-        `);
-      }
-    </script>
-  </div>
-  <script>
-    let pads = {};
-    function togglePad(i) {
-      const btn = document.getElementById('btn' + i);
-      if (pads[i]) {
-        pads[i].pause();
-        btn.textContent = 'OFF';
-        btn.classList.remove("on");
-        btn.style.backgroundColor = "red";
-        pads[i] = null;
-      } else {
-        pads[i] = new Audio('pads/pad' + i + '.mp3');
-        pads[i].loop = true;
-        setVolume(i);
-        pads[i].play();
-        btn.textContent = 'ON';
-        btn.classList.add("on");
-        btn.style.backgroundColor = "green";
-      }
-    }function setVolume(i) {
-  const vol = document.getElementById('vol' + i).value;
-  if (pads[i]) {
-    pads[i].volume = vol / 100;
+      let pads = {};
+      let padFiles = {};function handleFileSelect(event, i) {
+    const file = event.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      padFiles[i] = { file: file, url: url };
+      document.getElementById("sound" + i).textContent = file.name;
+    }
   }
-}
 
-  </script>
+  function togglePad(i) {
+    const btn = document.getElementById('btn' + i);
+
+    if (pads[i]) {
+      pads[i].pause();
+      btn.textContent = 'OFF';
+      btn.classList.remove("on");
+      btn.style.backgroundColor = "red";
+      pads[i] = null;
+    } else {
+      if (!padFiles[i]) {
+        alert("Por favor, selecione um arquivo para o Pad " + i);
+        return;
+      }
+      pads[i] = new Audio(padFiles[i].url);
+      pads[i].loop = true;
+      setVolume(i);
+      pads[i].play();
+      btn.textContent = 'ON';
+      btn.classList.add("on");
+      btn.style.backgroundColor = "green";
+    }
+  }
+
+  function setVolume(i) {
+    const vol = document.getElementById('vol' + i).value;
+    if (pads[i]) {
+      pads[i].volume = vol / 100;
+    }
+  }
+
+  for (let i = 1; i <= 8; i++) {
+    document.write(`
+      <div class="pad" id="pad${i}">
+        <button class="toggle" onclick="togglePad(${i})" id="btn${i}">OFF</button>
+        <div class="mfx">MFX 1</div>
+        <div class="sound" id="sound${i}">Sem arquivo</div>
+        <input type="range" min="0" max="100" value="100" id="vol${i}" onchange="setVolume(${i})" />
+        <input type="file" accept="audio/*" onchange="handleFileSelect(event, ${i})" />
+        <div class="part">Parte ${i}</div>
+      </div>
+    `);
+  }
+</script>
+
+  </div>
 </body>
 </html>
