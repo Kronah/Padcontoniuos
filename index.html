@@ -1,102 +1,86 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>XPS PAD HUB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>XPS PAD HUB</h1>
-  <div class="container">
-    <!-- Canal -->
+  <div class="pad-container">
+    <!-- 8 canais -->
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad1', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 1</div>
+    <div class="pad" id="pad1">
+      <button class="toggle" onclick="togglePad(1)" id="btn1">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 1</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad2', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 2</div>
+
+    <div class="pad" id="pad2">
+      <button class="toggle" onclick="togglePad(2)" id="btn2">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 2</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad3', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 3</div>
+
+    <div class="pad" id="pad3">
+      <button class="toggle" onclick="togglePad(3)" id="btn3">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 3</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad4', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 4</div>
+
+    <div class="pad" id="pad4">
+      <button class="toggle" onclick="togglePad(4)" id="btn4">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 4</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad5', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 5</div>
+
+    <div class="pad" id="pad5">
+      <button class="toggle" onclick="togglePad(5)" id="btn5">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 5</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad6', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 6</div>
+
+    <div class="pad" id="pad6">
+      <button class="toggle" onclick="togglePad(6)" id="btn6">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 6</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad7', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 7</div>
+
+    <div class="pad" id="pad7">
+      <button class="toggle" onclick="togglePad(7)" id="btn7">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 7</div>
     </div>
     
-    <div class="canal">
-      <button class="onoff" onclick="togglePad('pad8', this)">OFF</button>
-      <div class="selector">MFX 1</div>
-      <div class="volume" onclick="adjustVolume(this, event)">
-        <div class="nivel" style="height: 100%%;"></div>
-      </div>
-      <div class="instrumento">88StageGrand</div>
-      <div class="numero">100</div>
-      <div class="parte">Parte 8</div>
+
+    <div class="pad" id="pad8">
+      <button class="toggle" onclick="togglePad(8)" id="btn8">OFF</button>
+      <div class="mfx">MFX 1</div>
+      <div class="sound">88StageGrand</div>
+      <div class="volume-bar"></div>
+      <div class="part">Parte 8</div>
     </div>
     
   </div>

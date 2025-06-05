@@ -1,66 +1,51 @@
+
 body {
-  background-color: #000;
-  color: white;
-  font-family: sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #00ffe1;
   text-align: center;
 }
 
 h1 {
-  margin: 10px 0;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.canal {
-  background: #222;
-  border: 1px solid #555;
-  margin: 5px;
   padding: 10px;
-  width: 100px;
+}
+
+.pad-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.pad {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  min-width: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
 }
 
-.onoff {
-  background-color: red;
-  color: white;
+.toggle {
+  background: #fff;
   border: none;
-  padding: 5px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+.mfx, .sound, .part {
+  margin-top: 5px;
+}
+
+.volume-bar {
   width: 80%;
-  margin-bottom: 5px;
-  cursor: pointer;
-}
-
-.selector {
-  background: #444;
-  padding: 5px;
-  margin-bottom: 5px;
-  width: 80%;
-  text-align: center;
-}
-
-.volume {
-  background: #000;
-  border: 1px solid #00f0ff;
-  width: 40px;
-  height: 150px;
-  position: relative;
-  margin: 5px 0;
-  cursor: pointer;
-}
-
-.nivel {
-  background: #00f0ff;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
-
-.instrumento, .numero, .parte {
-  margin: 2px 0;
+  height: 80px;
+  background: #00d2ff;
+  margin: 8px 0;
+  border-radius: 5px;
 }
