@@ -1,28 +1,66 @@
 body {
-  background-color: #121212;
-  color: #00ffcc;
+  background-color: #000;
+  color: white;
   font-family: sans-serif;
   text-align: center;
-  padding: 20px;
 }
 
 h1 {
-  margin-bottom: 30px;
+  margin: 10px 0;
 }
 
-.botoes button, .stop {
-  margin: 10px;
-  padding: 15px 30px;
-  font-size: 16px;
-  border-radius: 8px;
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.canal {
+  background: #222;
+  border: 1px solid #555;
+  margin: 5px;
+  padding: 10px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.onoff {
+  background-color: red;
+  color: white;
   border: none;
-  background-color: #00ffcc;
-  color: #000;
-  font-weight: bold;
+  padding: 5px;
+  width: 80%;
+  margin-bottom: 5px;
   cursor: pointer;
 }
 
-.stop {
-  background-color: #ff0033;
-  color: white;
+.selector {
+  background: #444;
+  padding: 5px;
+  margin-bottom: 5px;
+  width: 80%;
+  text-align: center;
+}
+
+.volume {
+  background: #000;
+  border: 1px solid #00f0ff;
+  width: 40px;
+  height: 150px;
+  position: relative;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.nivel {
+  background: #00f0ff;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.instrumento, .numero, .parte {
+  margin: 2px 0;
 }
