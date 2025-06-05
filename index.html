@@ -1,89 +1,109 @@
-
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>XPS PAD HUB</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #00ffe1;
+      text-align: center;
+    }h1 {
+  padding: 10px;
+}
+
+.pad-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.pad {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.toggle {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: bold;
+  color: white;
+  background-color: red;
+}
+
+.toggle.on {
+  background-color: green;
+}
+
+.mfx, .sound, .part {
+  margin-top: 5px;
+}
+
+input[type=range] {
+  writing-mode: bt-lr; /* vertical */
+  -webkit-appearance: slider-vertical;
+  width: 20px;
+  height: 100px;
+  margin: 10px 0;
+}
+
+  </style>
 </head>
 <body>
   <h1>XPS PAD HUB</h1>
   <div class="pad-container">
     <!-- 8 canais -->
-    
-    <div class="pad" id="pad1">
-      <button class="toggle" onclick="togglePad(1)" id="btn1">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 1</div>
-    </div>
-    
-
-    <div class="pad" id="pad2">
-      <button class="toggle" onclick="togglePad(2)" id="btn2">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 2</div>
-    </div>
-    
-
-    <div class="pad" id="pad3">
-      <button class="toggle" onclick="togglePad(3)" id="btn3">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 3</div>
-    </div>
-    
-
-    <div class="pad" id="pad4">
-      <button class="toggle" onclick="togglePad(4)" id="btn4">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 4</div>
-    </div>
-    
-
-    <div class="pad" id="pad5">
-      <button class="toggle" onclick="togglePad(5)" id="btn5">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 5</div>
-    </div>
-    
-
-    <div class="pad" id="pad6">
-      <button class="toggle" onclick="togglePad(6)" id="btn6">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 6</div>
-    </div>
-    
-
-    <div class="pad" id="pad7">
-      <button class="toggle" onclick="togglePad(7)" id="btn7">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 7</div>
-    </div>
-    
-
-    <div class="pad" id="pad8">
-      <button class="toggle" onclick="togglePad(8)" id="btn8">OFF</button>
-      <div class="mfx">MFX 1</div>
-      <div class="sound">88StageGrand</div>
-      <div class="volume-bar"></div>
-      <div class="part">Parte 8</div>
-    </div>
-    
+    <script>
+      for (let i = 1; i <= 8; i++) {
+        document.write(`
+          <div class="pad" id="pad${i}">
+            <button class="toggle" onclick="togglePad(${i})" id="btn${i}">OFF</button>
+            <div class="mfx">MFX 1</div>
+            <div class="sound">88StageGrand</div>
+            <input type="range" min="0" max="100" value="100" id="vol${i}" onchange="setVolume(${i})" />
+            <div class="part">Parte ${i}</div>
+          </div>
+        `);
+      }
+    </script>
   </div>
-  <script src="script.js"></script>
+  <script>
+    let pads = {};
+    function togglePad(i) {
+      const btn = document.getElementById('btn' + i);
+      if (pads[i]) {
+        pads[i].pause();
+        btn.textContent = 'OFF';
+        btn.classList.remove("on");
+        btn.style.backgroundColor = "red";
+        pads[i] = null;
+      } else {
+        pads[i] = new Audio('pads/pad' + i + '.mp3');
+        pads[i].loop = true;
+        setVolume(i);
+        pads[i].play();
+        btn.textContent = 'ON';
+        btn.classList.add("on");
+        btn.style.backgroundColor = "green";
+      }
+    }function setVolume(i) {
+  const vol = document.getElementById('vol' + i).value;
+  if (pads[i]) {
+    pads[i].volume = vol / 100;
+  }
+}
+
+  </script>
 </body>
 </html>
