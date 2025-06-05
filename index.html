@@ -1,130 +1,146 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XPS PAD HUB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XPS Pad Hub</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: #00ffe1;
+      font-family: sans-serif;
+      background-color: #121212;
+      color: #0ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
       text-align: center;
-    }h1 {
-  padding: 10px;
-}
+      margin: 20px;
+      font-size: 28px;
+    }
 
-.pad-container {
-  display: flex;
-  overflow-x: auto;
-  padding: 10px;
-}
+    .pad-container {
+      display: flex;
+      overflow-x: auto;
+      padding: 20px;
+      gap: 20px;
+      width: 100%;
+    }
 
-.pad {
-  background: #1f1f1f;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 5px;
-  min-width: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-}
+    .pad {
+      background: #222;
+      border-radius: 10px;
+      padding: 15px;
+      width: 180px;
+      min-width: 160px;
+      box-shadow: 0 0 10px #0ff4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #0ff;
+    }
 
-.toggle {
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-weight: bold;
-  color: white;
-  background-color: red;
-}
+    .pad button {
+      margin: 10px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.toggle.on {
-  background-color: green;
-}
+    .pad .on { background-color: green; color: white; }
+    .pad .off { background-color: red; color: white; }
 
-.mfx, .sound, .part {
-  margin-top: 5px;
-}
+    input[type="range"] {
+      width: 100%;
+    }
 
-input[type=range] {
-  writing-mode: bt-lr; /* vertical */
-  -webkit-appearance: slider-vertical;
-  width: 20px;
-  height: 100px;
-  margin: 10px 0;
-}
+    input[type="file"] {
+      margin: 5px;
+    }
 
-input[type=file] {
-  margin-top: 5px;
-  color: white;
-}
-
+    .filename {
+      font-size: 14px;
+      text-align: center;
+      margin: 5px 0;
+      color: #0ff;
+    }
   </style>
 </head>
 <body>
   <h1>XPS PAD HUB</h1>
-  <div class="pad-container">
-    <!-- 8 canais -->
-    <script>
-      let pads = {};
-      let padFiles = {};function handleFileSelect(event, i) {
-    const file = event.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      padFiles[i] = { file: file, url: url };
-      document.getElementById("sound" + i).textContent = file.name;
+  <div class="pad-container" id="padContainer"></div>
+
+  <script>
+    const padContainer = document.getElementById("padContainer");
+
+    for (let i = 1; i <= 8; i++) {
+      const pad = document.createElement("div");
+      pad.classList.add("pad");
+
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "audio/*";
+
+      const audio = new Audio();
+      let isPlaying = false;
+
+      const filename = document.createElement("div");
+      filename.classList.add("filename");
+      filename.innerText = `PAD ${i}`;
+
+      const button = document.createElement("button");
+      button.innerText = "OFF";
+      button.classList.add("off");
+
+      const volume = document.createElement("input");
+      volume.type = "range";
+      volume.min = 0;
+      volume.max = 1;
+      volume.step = 0.01;
+      volume.value = 1;
+
+      volume.addEventListener("input", () => {
+        audio.volume = volume.value;
+      });
+
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (file) {
+          audio.src = URL.createObjectURL(file);
+          filename.innerText = file.name.replace(/\.[^/.]+$/, ""); // nome sem extensão
+        }
+      });
+
+      button.addEventListener("click", () => {
+        if (!audio.src) return alert("Selecione um arquivo primeiro!");
+        if (isPlaying) {
+          audio.pause();
+          audio.currentTime = 0;
+          button.innerText = "OFF";
+          button.classList.remove("on");
+          button.classList.add("off");
+        } else {
+          audio.loop = true;
+          audio.volume = volume.value;
+          audio.play();
+          button.innerText = "ON";
+          button.classList.remove("off");
+          button.classList.add("on");
+        }
+        isPlaying = !isPlaying;
+      });
+
+      pad.appendChild(fileInput);
+      pad.appendChild(filename);
+      pad.appendChild(button);
+      pad.appendChild(volume);
+
+      padContainer.appendChild(pad);
     }
-  }
-
-  function togglePad(i) {
-    const btn = document.getElementById('btn' + i);
-
-    if (pads[i]) {
-      pads[i].pause();
-      btn.textContent = 'OFF';
-      btn.classList.remove("on");
-      btn.style.backgroundColor = "red";
-      pads[i] = null;
-    } else {
-      if (!padFiles[i]) {
-        alert("Por favor, selecione um arquivo para o Pad " + i);
-        return;
-      }
-      pads[i] = new Audio(padFiles[i].url);
-      pads[i].loop = true;
-      setVolume(i);
-      pads[i].play();
-      btn.textContent = 'ON';
-      btn.classList.add("on");
-      btn.style.backgroundColor = "green";
-    }
-  }
-
-  function setVolume(i) {
-    const vol = document.getElementById('vol' + i).value;
-    if (pads[i]) {
-      pads[i].volume = vol / 100;
-    }
-  }
-
-  for (let i = 1; i <= 8; i++) {
-    document.write(`
-      <div class="pad" id="pad${i}">
-        <button class="toggle" onclick="togglePad(${i})" id="btn${i}">OFF</button>
-        <div class="mfx">MFX 1</div>
-        <div class="sound" id="sound${i}">Sem arquivo</div>
-        <input type="range" min="0" max="100" value="100" id="vol${i}" onchange="setVolume(${i})" />
-        <input type="file" accept="audio/*" onchange="handleFileSelect(event, ${i})" />
-        <div class="part">Parte ${i}</div>
-      </div>
-    `);
-  }
-</script>
-
-  </div>
+  </script>
 </body>
 </html>
